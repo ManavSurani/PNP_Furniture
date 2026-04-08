@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Packages — PnP Interior Consultant</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero { min-height:55vh;background:var(--dark);display:flex;align-items:flex-end;padding:120px 5vw 70px;position:relative;overflow:hidden; }
+.page-hero-bg { position:absolute;inset:0;background-image:linear-gradient(rgba(200,169,110,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,110,0.03) 1px,transparent 1px);background-size:60px 60px; }
+.page-hero-glow { position:absolute;bottom:-80px;right:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,169,110,0.1) 0%,transparent 70%); }
+.page-hero-breadcrumb { font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem; }
+.page-hero-breadcrumb a { color:var(--gold);text-decoration:none; }
+.page-hero-title { font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:500;color:var(--white);line-height:1.05; }
+.page-hero-title em { color:var(--gold);font-style:italic; }
+.page-hero-line { position:absolute;bottom:0;left:5vw;right:5vw;height:1px;background:var(--border); }
+
+.packages-intro { background:var(--cream);padding:80px 5vw;text-align:center; }
+.packages-intro p { font-size:1.05rem;color:var(--mid);font-weight:300;line-height:1.85;max-width:640px;margin:0 auto; }
+
+.packages-grid {
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;background:var(--dark);
+  border-top:1px solid var(--border);
+}
+.pkg {
+  border-right:1px solid var(--border);
+  padding:60px 36px;
+  position:relative;overflow:hidden;
+  transition:background var(--transition);
+}
+.pkg:last-child { border-right:none; }
+.pkg:hover { background:rgba(200,169,110,0.04); }
+.pkg.featured { background:rgba(200,169,110,0.06);border-top:3px solid var(--gold); }
+.pkg-badge { position:absolute;top:0;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--dark);font-size:0.6rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:5px 16px; }
+.pkg-icon { font-size:3rem;margin-bottom:24px;display:block; }
+.pkg-num { font-family:'Playfair Display',serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:0.7; }
+.pkg-name { font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);margin-bottom:16px;line-height:1.2; }
+.pkg-desc { font-size:0.82rem;color:rgba(255,255,255,0.38);font-weight:300;line-height:1.8;margin-bottom:28px; }
+.pkg-includes { font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500; }
+.pkg-list { list-style:none;display:flex;flex-direction:column;gap:10px; }
+.pkg-list li { font-size:0.8rem;color:rgba(255,255,255,0.5);font-weight:300;display:flex;align-items:center;gap:10px; }
+.pkg-list li::before { content:'✓';color:var(--gold);font-size:0.75rem;flex-shrink:0; }
+.pkg-cta { display:inline-flex;align-items:center;gap:8px;font-size:0.72rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;margin-top:32px;border:1px solid var(--border);padding:10px 20px;transition:border-color 0.3s,background 0.3s; }
+.pkg-cta:hover { border-color:var(--gold);background:rgba(200,169,110,0.1); }
+.pkg.featured .pkg-cta { background:var(--gold);color:var(--dark);border-color:var(--gold); }
+.pkg.featured .pkg-cta:hover { background:var(--gold-light); }
+
+.compare-section { padding:110px 5vw;background:var(--cream); }
+.compare-table { width:100%;border-collapse:collapse;margin-top:50px; }
+.compare-table th { padding:16px 20px;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:500;border-bottom:2px solid var(--gold);text-align:left; }
+.compare-table th:first-child { width:35%; }
+.compare-table td { padding:14px 20px;font-size:0.85rem;font-weight:300;border-bottom:1px solid rgba(200,169,110,0.1);color:var(--mid); }
+.compare-table td:first-child { color:var(--dark);font-weight:400; }
+.compare-table td.yes { color:var(--gold); }
+.compare-table td.no { color:rgba(0,0,0,0.2); }
+.compare-table tr:hover td { background:rgba(200,169,110,0.04); }
+
+.faq-section { background:var(--dark);padding:110px 5vw; }
+.faq-list { max-width:760px;margin:60px auto 0; }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-q {
+  padding:24px 0;display:flex;justify-content:space-between;align-items:center;
+  cursor:none;
+  font-size:0.95rem;color:var(--white);font-weight:400;
+}
+.faq-q:hover { color:var(--gold); }
+.faq-arrow { color:var(--gold);font-size:1.2rem;transition:transform 0.3s; }
+.faq-item.open .faq-arrow { transform:rotate(45deg); }
+.faq-a { display:none;padding-bottom:20px;font-size:0.85rem;color:rgba(255,255,255,0.4);font-weight:300;line-height:1.8; }
+.faq-item.open .faq-a { display:block; }
+
+@media(max-width:900px){.packages-grid{grid-template-columns:1fr 1fr;}.pkg{border-bottom:1px solid var(--border);border-right:1px solid var(--border);}.pkg:nth-child(2n){border-right:none;}}
+@media(max-width:600px){.packages-grid{grid-template-columns:1fr;}.pkg{border-right:none;}}
+</style>
+</head>
+<body>
+<div class="cursor"></div><div class="cursor-ring"></div>
+<nav class="navbar scrolled">
+  <a href="index.html" class="nav-logo">PnP<span> Interior</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li><li><a href="packages.html" class="active">Packages</a></li>
+    <li><a href="reviews.html">Reviews</a></li><li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="packages.html" class="active">Packages</a><a href="reviews.html">Reviews</a><a href="contact.html">Contact Us</a>
+</div>
+<div class="page-wrapper">
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div><div class="page-hero-glow"></div>
+  <div style="position:relative;">
+    <div class="page-hero-breadcrumb"><a href="index.html">Home</a> / Packages</div>
+    <h1 class="page-hero-title">Flexible <em>Packages</em><br>For Every Need</h1>
+  </div>
+  <div class="page-hero-line"></div>
+</div>
+
+<div class="packages-intro reveal">
+  <span class="eyebrow" style="justify-content:center;">Choose Your Plan</span>
+  <h2 class="display-title" style="margin-bottom:1rem;">Take What You <em>Need</em></h2>
+  <div class="gold-rule center"></div>
+  <p>We understand every project is different. That's why we offer flexible packages — from individual services to our complete end-to-end solution. Mix and match, or go all-in. The choice is yours.</p>
+</div>
+
+<!-- PACKAGES -->
+<div class="packages-grid" data-stagger>
+  <div class="pkg reveal">
+    <span class="pkg-icon">✏️</span>
+    <div class="pkg-num">Package 01</div>
+    <div class="pkg-name">Design Only</div>
+    <p class="pkg-desc">Get professional furniture design plans. You source materials and workers independently.</p>
+    <div class="pkg-includes">What's Included</div>
+    <ul class="pkg-list">
+      <li>Space measurement & analysis</li>
+      <li>Custom furniture design drawings</li>
+      <li>Material recommendations</li>
+      <li>Budget estimation guide</li>
+      <li>Design revisions included</li>
+    </ul>
+    <a href="contact.html" class="pkg-cta">Get Started →</a>
+  </div>
+  <div class="pkg reveal">
+    <span class="pkg-icon">📦</span>
+    <div class="pkg-num">Package 02</div>
+    <div class="pkg-name">Materials Only</div>
+    <p class="pkg-desc">Premium hardware and furniture materials from our store. You manage design and labor.</p>
+    <div class="pkg-includes">What's Included</div>
+    <ul class="pkg-list">
+      <li>Quality-checked plywood & boards</li>
+      <li>Hinges, handles & fittings</li>
+      <li>Laminates & surface finishes</li>
+      <li>Delivery available</li>
+      <li>Contractor pricing available</li>
+    </ul>
+    <a href="contact.html" class="pkg-cta">Enquire Now →</a>
+  </div>
+  <div class="pkg reveal">
+    <span class="pkg-icon">🔨</span>
+    <div class="pkg-num">Package 03</div>
+    <div class="pkg-name">Labor Only</div>
+    <p class="pkg-desc">Skilled carpenters and installers for your project. You supply the design and materials.</p>
+    <div class="pkg-includes">What's Included</div>
+    <ul class="pkg-list">
+      <li>Experienced carpenters on-site</li>
+      <li>Furniture manufacturing</li>
+      <li>Installation & fitting</li>
+      <li>Daily or project-based hiring</li>
+      <li>Site cleanup after work</li>
+    </ul>
+    <a href="contact.html" class="pkg-cta">Hire Workers →</a>
+  </div>
+  <div class="pkg featured reveal">
+    <span class="pkg-badge">Most Popular</span>
+    <span class="pkg-icon">⭐</span>
+    <div class="pkg-num">Package 04</div>
+    <div class="pkg-name">Full Combo</div>
+    <p class="pkg-desc">Our complete end-to-end interior solution. We handle everything from concept to completion.</p>
+    <div class="pkg-includes">Everything Included</div>
+    <ul class="pkg-list">
+      <li>Full design consultation</li>
+      <li>All materials supplied</li>
+      <li>Skilled workforce provided</li>
+      <li>Project management</li>
+      <li>Quality inspection & handover</li>
+      <li>Post-project support</li>
+    </ul>
+    <a href="contact.html" class="pkg-cta">Get Full Quote →</a>
+  </div>
+</div>
+
+<!-- COMPARE TABLE -->
+<section class="compare-section">
+  <div class="reveal" style="text-align:center;">
+    <span class="eyebrow" style="justify-content:center;">Compare Plans</span>
+    <h2 class="display-title">Side-by-Side <em>Comparison</em></h2>
+  </div>
+  <div style="overflow-x:auto;" class="reveal">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Design Only</th>
+          <th>Materials Only</th>
+          <th>Labor Only</th>
+          <th>Full Combo ⭐</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Space consultation</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Custom design drawings</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Material supply</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Skilled carpenters</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Project management</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Quality inspection</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Post-project support</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Best value for complete projects</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="reveal" style="text-align:center;">
+    <span class="eyebrow" style="justify-content:center;">FAQs</span>
+    <h2 class="display-title light">Frequently Asked <em>Questions</em></h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q">Can I mix packages? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">Absolutely. You can combine any services based on your needs. For example, take design and materials from us but arrange your own workers. We're flexible — just tell us what you need.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How long does a typical project take? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">It depends on the scope. A single room (like a bedroom wardrobe) typically takes 1–2 weeks. A full home interior can take 4–8 weeks. We give you a clear timeline at the start of every project.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Do you work outside Surat? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">Our primary service area is Surat and nearby areas. For material supply, we can arrange delivery to a wider radius. Contact us with your location and we'll let you know what's possible.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How do I get a quote? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">Simply WhatsApp us or fill out our contact form. Share your requirements and we'll provide a detailed, no-obligation quote within 24 hours.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">What payment methods do you accept? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">We accept cash, UPI (GPay, PhonePe, Paytm), and bank transfer. We typically work with a 50% advance to begin and 50% on completion.</div>
+    </div>
+  </div>
+</section>
+
+</div>
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand">PnP<span> Interior</span></div><p class="footer-desc">Complete furniture & interior solutions in Surat, Gujarat.</p></div>
+    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="packages.html">Packages</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">Shop-136, Hilton Business Center</a></li><li><a href="#">Chapprabhatta, Surat – 394520</a></li><li><a href="https://wa.me/919586525305" target="_blank">+91 95865 25305</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-copy">© 2025 PnP Interior Consultant.</span><a href="https://wa.me/919586525305" target="_blank" class="footer-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp Us</a></div>
+</footer>
+<a href="https://wa.me/919586525305" target="_blank" class="wa-float"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script src="main.js"></script>
+<script>
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>

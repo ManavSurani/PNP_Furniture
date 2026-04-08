@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews — PnP Interior Consultant</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero { min-height:55vh;background:var(--dark);display:flex;align-items:flex-end;padding:120px 5vw 70px;position:relative;overflow:hidden; }
+.page-hero-bg { position:absolute;inset:0;background-image:linear-gradient(rgba(200,169,110,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,110,0.03) 1px,transparent 1px);background-size:60px 60px; }
+.page-hero-glow { position:absolute;top:-80px;left:30%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,169,110,0.1) 0%,transparent 70%); }
+.page-hero-breadcrumb { font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem; }
+.page-hero-breadcrumb a { color:var(--gold);text-decoration:none; }
+.page-hero-title { font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,6rem);font-weight:500;color:var(--white);line-height:1.05; }
+.page-hero-title em { color:var(--gold);font-style:italic; }
+.page-hero-line { position:absolute;bottom:0;left:5vw;right:5vw;height:1px;background:var(--border); }
+
+/* RATING SUMMARY */
+.rating-bar { background:var(--dark);padding:60px 5vw;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;border-bottom:1px solid var(--border); }
+.rating-big { text-align:center; }
+.rating-num { font-family:'Playfair Display',serif;font-size:5rem;color:var(--gold);line-height:1;font-weight:400; }
+.rating-stars { font-size:1.3rem;letter-spacing:4px;color:var(--gold);margin:8px 0; }
+.rating-count { font-size:0.75rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em; }
+.rating-bars { flex:1;max-width:400px; }
+.rbar { display:flex;align-items:center;gap:12px;margin-bottom:10px; }
+.rbar-label { font-size:0.75rem;color:rgba(255,255,255,0.4);min-width:30px; }
+.rbar-track { flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden; }
+.rbar-fill { height:100%;background:var(--gold);border-radius:2px;transition:width 1.5s ease; }
+.rbar-pct { font-size:0.72rem;color:rgba(255,255,255,0.3);min-width:32px;text-align:right; }
+
+/* REVIEWS GRID */
+.reviews-masonry {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;padding:80px 5vw;background:var(--cream);
+}
+.review-card {
+  background:var(--white);border:1px solid rgba(200,169,110,0.12);
+  padding:40px 32px;break-inside:avoid;
+  transition:border-color var(--transition),transform var(--transition);
+  position:relative;
+}
+.review-card:hover { border-color:var(--gold);transform:translateY(-4px); }
+.review-card::before { content:'"';position:absolute;top:20px;right:28px;font-family:'Playfair Display',serif;font-size:6rem;color:var(--gold);opacity:0.06;line-height:1; }
+.review-stars { color:var(--gold);font-size:0.85rem;letter-spacing:3px;margin-bottom:20px; }
+.review-text { font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--dark);line-height:1.7;font-style:italic;margin-bottom:24px; }
+.review-divider { width:30px;height:1px;background:var(--gold);margin-bottom:16px; }
+.review-author-name { font-size:0.9rem;font-weight:500;color:var(--dark);margin-bottom:3px; }
+.review-author-meta { font-size:0.72rem;color:var(--mid);font-weight:300;letter-spacing:0.05em; }
+.review-project { display:inline-block;margin-top:12px;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);background:rgba(200,169,110,0.08);padding:4px 10px;border-radius:1px; }
+
+/* FEATURED REVIEW */
+.featured-review {
+  background:var(--dark);padding:80px 5vw;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.featured-quote {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  color:var(--white);line-height:1.5;font-style:italic;
+  position:relative;padding-left:40px;
+}
+.featured-quote::before { content:'"';position:absolute;left:-10px;top:-20px;font-size:8rem;color:var(--gold);opacity:0.15;line-height:1;font-style:normal; }
+.featured-author { margin-top:32px; }
+.featured-author-name { font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--white); }
+.featured-author-role { font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:4px; }
+
+/* LEAVE REVIEW CTA */
+.review-cta { background:var(--gold);padding:80px 5vw;text-align:center; }
+.review-cta h2 { font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3rem);color:var(--dark);margin-bottom:1rem; }
+.review-cta p { font-size:0.95rem;color:rgba(0,0,0,0.55);font-weight:300;max-width:500px;margin:0 auto 2rem; }
+
+@media(max-width:900px){.reviews-masonry{grid-template-columns:1fr 1fr;}.featured-review{grid-template-columns:1fr;gap:40px;}}
+@media(max-width:600px){.reviews-masonry{grid-template-columns:1fr;}.rating-bar{flex-direction:column;text-align:center;}.rating-bars{width:100%;max-width:100%;}}
+</style>
+</head>
+<body>
+<div class="cursor"></div><div class="cursor-ring"></div>
+<nav class="navbar scrolled">
+  <a href="index.html" class="nav-logo">PnP<span> Interior</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li><li><a href="packages.html">Packages</a></li>
+    <li><a href="reviews.html" class="active">Reviews</a></li><li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a>
+  <a href="packages.html">Packages</a><a href="reviews.html" class="active">Reviews</a><a href="contact.html">Contact Us</a>
+</div>
+<div class="page-wrapper">
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div><div class="page-hero-glow"></div>
+  <div style="position:relative;">
+    <div class="page-hero-breadcrumb"><a href="index.html">Home</a> / Reviews</div>
+    <h1 class="page-hero-title">What Clients <em>Say</em><br>About Us</h1>
+  </div>
+  <div class="page-hero-line"></div>
+</div>
+
+<!-- RATING SUMMARY -->
+<div class="rating-bar">
+  <div class="rating-big reveal-left">
+    <div class="rating-num">4.9</div>
+    <div class="rating-stars">★★★★★</div>
+    <div class="rating-count">Based on 200+ reviews</div>
+  </div>
+  <div class="rating-bars reveal">
+    <div class="rbar"><span class="rbar-label">5 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:92%"></div></div><span class="rbar-pct">92%</span></div>
+    <div class="rbar"><span class="rbar-label">4 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:6%"></div></div><span class="rbar-pct">6%</span></div>
+    <div class="rbar"><span class="rbar-label">3 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:2%"></div></div><span class="rbar-pct">2%</span></div>
+    <div class="rbar"><span class="rbar-label">2 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div><span class="rbar-pct">0%</span></div>
+    <div class="rbar"><span class="rbar-label">1 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:0%"></div></div><span class="rbar-pct">0%</span></div>
+  </div>
+  <div class="reveal-right" style="text-align:center;">
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--white);margin-bottom:8px;">Happy with our service?</div>
+    <a href="https://wa.me/919586525305?text=I%20would%20like%20to%20share%20my%20feedback!" target="_blank" class="btn-outline" style="font-size:0.72rem;padding:10px 24px;">Share Your Review</a>
+  </div>
+</div>
+
+<!-- FEATURED REVIEW -->
+<div class="featured-review">
+  <div class="reveal-left">
+    <span class="eyebrow">Top Review</span>
+    <p class="featured-quote">PnP completely transformed our home. From the very first consultation, Nisarg and Pratik understood exactly what we wanted. The craftsmanship is outstanding and the project was completed ahead of schedule.</p>
+    <div class="featured-author">
+      <div class="review-stars" style="font-size:1rem;">★★★★★</div>
+      <div class="featured-author-name">Kavita & Rohan Mehta</div>
+      <div class="featured-author-role">Full Home Interior — Surat</div>
+    </div>
+  </div>
+  <div class="reveal-right" style="display:flex;flex-direction:column;gap:20px;">
+    <div style="background:rgba(200,169,110,0.08);border:1px solid var(--border);padding:24px 28px;">
+      <div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Project Type</div>
+      <div style="font-size:0.9rem;color:var(--white);">Complete Home Interior (Full Combo)</div>
+    </div>
+    <div style="background:rgba(200,169,110,0.08);border:1px solid var(--border);padding:24px 28px;">
+      <div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Location</div>
+      <div style="font-size:0.9rem;color:var(--white);">Vesu, Surat</div>
+    </div>
+    <div style="background:rgba(200,169,110,0.08);border:1px solid var(--border);padding:24px 28px;">
+      <div style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Rating</div>
+      <div style="font-size:0.9rem;color:var(--white);">5.0 / 5.0 — Exceptional</div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS GRID -->
+<div class="reviews-masonry" data-stagger>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">Excellent service from start to finish. The modular kitchen they designed is exactly what I imagined — functional, beautiful, and within budget.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Ramesh Patel</div>
+    <div class="review-author-meta">Homeowner, Adajan, Surat</div>
+    <span class="review-project">Modular Kitchen</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">We hired PnP for our office renovation and they delivered beyond expectations. Professional team, clean work, and zero hassle. Highly recommend the Full Combo package!</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Meera Shah</div>
+    <div class="review-author-meta">Business Owner, Athwa, Surat</div>
+    <span class="review-project">Office Interior — Full Combo</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">Nisarg bhai's design sense is truly exceptional. The bedroom wardrobe fits perfectly and uses every inch of space smartly. Will definitely call them again for the living room.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Arvind Desai</div>
+    <div class="review-author-meta">Homeowner, Gandhinagar</div>
+    <span class="review-project">Bedroom Wardrobe</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">Best hardware quality in Surat at this price. I'm a contractor and I source all my materials from PnP. Their fittings are top-grade and delivery is always on time.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Suresh Carpenter Works</div>
+    <div class="review-author-meta">Contractor, Surat</div>
+    <span class="review-project">Materials Supply</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">I was on a tight budget and Pratik bhai helped me get the best value without compromising on quality. They even completed the work 3 days ahead of schedule. Fantastic!</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Priya & Ankit Joshi</div>
+    <div class="review-author-meta">Newlyweds, Katargam, Surat</div>
+    <span class="review-project">Living Room + Bedroom</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">Very professional and skilled carpenters. I bought my own design and materials and hired PnP's workers for execution. They were neat, punctual, and did an outstanding job.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Dinesh Agrawal</div>
+    <div class="review-author-meta">Homeowner, Piplod, Surat</div>
+    <span class="review-project">Labor Only — TV Unit</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">From the showroom visit to the final handover — every step was smooth. The team kept me updated and the quality of the wooden furniture is outstanding. Truly premium.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Manisha Trivedi</div>
+    <div class="review-author-meta">Interior Enthusiast, Varachha, Surat</div>
+    <span class="review-project">Custom Dining Set</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">Great experience. The consultation was free and extremely helpful. They gave us 3 design options with different price ranges. Very honest and transparent — no pushy sales tactics.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Bhavesh & Nidhi Modi</div>
+    <div class="review-author-meta">First-time homeowners, Surat</div>
+    <span class="review-project">Design Consultation</span>
+  </div>
+  <div class="review-card reveal">
+    <div class="review-stars">★★★★★</div>
+    <p class="review-text">I've used PnP three times now — for my home, my parents' home, and my office. Every single project was flawlessly executed. They've become my go-to for all interior needs.</p>
+    <div class="review-divider"></div>
+    <div class="review-author-name">Chirag Solanki</div>
+    <div class="review-author-meta">Repeat Customer, Surat</div>
+    <span class="review-project">3 Projects — Full Combo</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="review-cta">
+  <h2 class="reveal">Ready to Create <em>Your</em> Success Story?</h2>
+  <p class="reveal">Join 200+ happy clients who transformed their spaces with PnP Interior Consultant.</p>
+  <a href="https://wa.me/919586525305?text=Hello%20PnP!%20I%20want%20to%20start%20my%20interior%20project." target="_blank" style="display:inline-flex;align-items:center;gap:12px;background:var(--dark);color:var(--white);padding:15px 36px;font-size:0.78rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:1px;" class="reveal">Start Your Project →</a>
+</div>
+
+</div>
+<footer>
+  <div class="footer-grid">
+    <div><div class="footer-brand">PnP<span> Interior</span></div><p class="footer-desc">Complete furniture & interior solutions in Surat, Gujarat.</p></div>
+    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="packages.html">Packages</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">Shop-136, Hilton Business Center</a></li><li><a href="#">Chapprabhatta, Surat – 394520</a></li><li><a href="https://wa.me/919586525305" target="_blank">+91 95865 25305</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-copy">© 2025 PnP Interior Consultant.</span><a href="https://wa.me/919586525305" target="_blank" class="footer-wa"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp Us</a></div>
+</footer>
+<a href="https://wa.me/919586525305" target="_blank" class="wa-float"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script src="main.js"></script>
+</body>
+</html>

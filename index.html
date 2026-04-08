@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PnP Interior Consultant — Home</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* HOME PAGE SPECIFIC */
+.hero {
+  min-height: 100vh;
+  background: var(--dark);
+  display: flex; align-items: center;
+  padding: 120px 5vw 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero-bg-lines {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,169,110,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px; pointer-events: none;
+}
+
+.hero-glow2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+  bottom: -60px; left: 20%; pointer-events: none;
+}
+
+.hero-content { position: relative; max-width: 700px; }
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.68rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold);
+  font-weight: 400; margin-bottom: 1.8rem;
+  border: 1px solid var(--border);
+  padding: 8px 16px; border-radius: 100px;
+}
+.hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+.hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+  font-weight: 500; line-height: 1.02;
+  color: var(--white);
+  margin-bottom: 2rem;
+  animation: heroIn 1s 0.2s ease both;
+}
+.hero-headline em { font-style: italic; color: var(--gold); }
+.hero-headline .stroke {
+  -webkit-text-stroke: 1px var(--gold);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 1rem; font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.8; max-width: 480px;
+  margin-bottom: 2.8rem;
+  animation: heroIn 1s 0.4s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  animation: heroIn 1s 0.6s ease both;
+}
+
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(255,255,255,0.3); font-size: 0.65rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  animation: heroIn 1s 1s ease both;
+}
+.hero-scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollLine 2s infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 5vw;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background-image: linear-gradient(to right, var(--border) 1px, transparent 1px);
+  background-size: 25% 100%;
+}
+.stat-item {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 20px 16px;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; font-weight: 400;
+  color: var(--gold); line-height: 1;
+}
+.stat-label {
+  font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-top: 8px; font-weight: 400;
+}
+
+/* INTRO */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 100px; align-items: center;
+}
+.intro-visual {
+  position: relative; aspect-ratio: 4/5;
+}
+.intro-block-main {
+  background: var(--dark);
+  position: absolute; inset: 0;
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 40px;
+  overflow: hidden;
+}
+.intro-block-main::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(to right, var(--gold), var(--gold-dark));
+}
+.intro-block-pattern {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+  background-size: 24px 24px;
+}
+.intro-big-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 6rem; font-weight: 400;
+  color: var(--gold); line-height: 0.9;
+  position: relative; opacity: 0.15;
+  position: absolute; top: 30px; right: 24px;
+}
+.intro-block-info { position: relative; }
+.intro-block-year {
+  font-size: 0.68rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 8px;
+}
+.intro-block-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 400;
+  color: var(--white); line-height: 1.3;
+}
+.intro-badge {
+  position: absolute; bottom: -24px; right: -24px;
+  width: 120px; height: 120px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.intro-badge-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 500; color: var(--dark); line-height: 1;
+}
+.intro-badge-text {
+  font-size: 0.55rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--dark2);
+  text-align: center; margin-top: 4px;
+}
+
+.feature-list { margin-top: 2.5rem; }
+.feature-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+}
+.feature-item:first-child { border-top: 1px solid rgba(200,169,110,0.1); }
+.feature-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--gold-pale);
+  font-weight: 400; min-width: 36px; line-height: 1;
+  opacity: 0.4;
+}
+.feature-title {
+  font-size: 0.88rem; font-weight: 500;
+  color: var(--dark); margin-bottom: 4px;
+}
+.feature-desc { font-size: 0.8rem; color: var(--mid); font-weight: 300; line-height: 1.6; }
+
+/* SERVICES PREVIEW */
+.services-preview {
+  background: var(--dark);
+  padding: 110px 5vw;
+}
+.services-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 60px;
+  border: 1px solid var(--border);
+}
+.sp-card {
+  background: var(--dark2);
+  padding: 40px 28px;
+  transition: background var(--transition);
+  position: relative; overflow: hidden;
+}
+.sp-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--gold-dark));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--transition);
+}
+.sp-card:hover { background: var(--dark3); }
+.sp-card:hover::after { transform: scaleX(1); }
+.sp-icon {
+  font-size: 2rem; margin-bottom: 24px;
+  display: block;
+}
+.sp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; color: var(--white);
+  margin-bottom: 10px;
+}
+.sp-desc { font-size: 0.8rem; color: rgba(255,255,255,0.35); font-weight: 300; line-height: 1.7; }
+.sp-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; color: var(--gold);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; margin-top: 20px;
+  transition: gap 0.3s;
+}
+.sp-card:hover .sp-link { gap: 14px; }
+
+/* OWNERS PREVIEW */
+.owners-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; margin-top: 60px;
+}
+.owner-card {
+  background: var(--white);
+  border: 1px solid rgba(200,169,110,0.15);
+  padding: 48px 40px;
+  position: relative; overflow: hidden;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.owner-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+.owner-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; width: 4px;
+  bottom: 0; background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
+}
+.owner-initials {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--dark);
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--gold);
+  margin-bottom: 20px;
+}
+.owner-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: var(--dark);
+  margin-bottom: 4px;
+}
+.owner-role {
+  font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 16px; display: block;
+}
+.owner-bio { font-size: 0.85rem; color: var(--mid); font-weight: 300; line-height: 1.75; }
+
+/* CTA BANNER */
+.cta-banner {
+  background: var(--gold);
+  padding: 80px 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; flex-wrap: wrap;
+}
+.cta-banner-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 500; color: var(--dark);
+  max-width: 500px; line-height: 1.2;
+}
+.btn-dark {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--dark);
+  color: var(--white);
+  padding: 15px 36px;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; cursor: none;
+  transition: background 0.3s, transform 0.2s;
+  border-radius: 1px; white-space: nowrap;
+}
+.btn-dark:hover { background: var(--dark2); transform: translateY(-2px); }
+
+@media (max-width: 900px) {
+  .intro-grid { grid-template-columns: 1fr; gap: 50px; }
+  .intro-visual { aspect-ratio: 3/2; }
+  .services-preview-grid { grid-template-columns: 1fr 1fr; }
+  .owners-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .stats-bar { grid-template-columns: 1fr 1fr; background-size: 50% 100%; }
+  .services-preview-grid { grid-template-columns: 1fr; }
+  .hero-headline { font-size: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled">
+  <a href="index.html" class="nav-logo">PnP<span> Interior</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="packages.html">Packages</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html" class="active">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="packages.html">Packages</a>
+  <a href="reviews.html">Reviews</a>
+  <a href="contact.html">Contact Us</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span class="hero-tag-dot"></span>Surat, Gujarat — Est. 2014</div>
+    <h1 class="hero-headline">
+      Crafting<br>
+      <em>Spaces</em> You<br>
+      <span class="stroke">Love</span>
+    </h1>
+    <p class="hero-sub">Complete furniture & interior solutions for homes and workspaces. We bring your vision to life — from design concept to flawless execution.</p>
+    <div class="hero-actions">
+      <a href="contact.html" class="btn-gold">Get Free Consultation →</a>
+      <a href="services.html" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" style="background-color:var(--panel);">
+  <div class="stat-item reveal">
+    <div class="stat-num"><span data-target="500" data-suffix="+">0</span></div>
+    <div class="stat-label">Projects Completed</div>
+  </div>
+  <div class="stat-item reveal" data-delay="100">
+    <div class="stat-num"><span data-target="10" data-suffix="+">0</span></div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item reveal" data-delay="200">
+    <div class="stat-num"><span data-target="100" data-suffix="%">0</span></div>
+    <div class="stat-label">Custom Work</div>
+  </div>
+  <div class="stat-item reveal" data-delay="300">
+    <div class="stat-num"><span data-target="200" data-suffix="+">0</span></div>
+    <div class="stat-label">Happy Clients</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="intro-grid">
+    <div class="intro-visual reveal-left">
+      <div class="intro-block-main">
+        <div class="intro-block-pattern"></div>
+        <div class="intro-big-text">10</div>
+        <div class="intro-block-info">
+          <div class="intro-block-year">Since 2014 — Surat's Trusted Partner</div>
+          <div class="intro-block-headline">Where Craftsmanship Meets Modern Design</div>
+        </div>
+      </div>
+      <div class="intro-badge">
+        <div class="intro-badge-num">PnP</div>
+        <div class="intro-badge-text">Interior<br>Experts</div>
+      </div>
+    </div>
+
+    <div class="reveal-right">
+      <span class="eyebrow">About PnP</span>
+      <h2 class="display-title">Your Vision, <em>Our Craft</em></h2>
+      <div class="gold-rule"></div>
+      <p class="body-text">At PnP Interior Consultant, we don't just build furniture — we create environments that reflect who you are. From luxurious living rooms to efficient office setups, every project receives our full dedication.</p>
+
+      <div class="feature-list" data-stagger>
+        <div class="feature-item reveal">
+          <div class="feature-num">01</div>
+          <div>
+            <div class="feature-title">Custom Furniture Design</div>
+            <div class="feature-desc">Bespoke designs tailored to your space, style, and lifestyle needs.</div>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-num">02</div>
+          <div>
+            <div class="feature-title">Premium Materials & Hardware</div>
+            <div class="feature-desc">High-quality materials sourced for durability and aesthetic excellence.</div>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-num">03</div>
+          <div>
+            <div class="feature-title">Expert Workforce</div>
+            <div class="feature-desc">Skilled carpenters and installers who treat your home like their own.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:2.5rem;">
+        <a href="about.html" class="btn-gold">Learn More About Us →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="services-preview">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
+    <div class="reveal">
+      <span class="eyebrow">What We Do</span>
+      <h2 class="display-title light">Our Core <em>Services</em></h2>
+    </div>
+    <a href="services.html" class="btn-outline reveal">View All Services</a>
+  </div>
+  <div class="services-preview-grid" data-stagger>
+    <div class="sp-card reveal">
+      <span class="sp-icon">🪑</span>
+      <div class="sp-title">Furniture Design</div>
+      <p class="sp-desc">Custom-crafted furniture designed to fit your space and personality perfectly.</p>
+      <a href="services.html" class="sp-link">Explore →</a>
+    </div>
+    <div class="sp-card reveal">
+      <span class="sp-icon">🔩</span>
+      <div class="sp-title">Hardware & Materials</div>
+      <p class="sp-desc">Premium quality fittings, accessories, and construction materials.</p>
+      <a href="services.html" class="sp-link">Explore →</a>
+    </div>
+    <div class="sp-card reveal">
+      <span class="sp-icon">👷</span>
+      <div class="sp-title">Skilled Workforce</div>
+      <p class="sp-desc">Experienced carpenters and installers ready for any project, big or small.</p>
+      <a href="services.html" class="sp-link">Explore →</a>
+    </div>
+    <div class="sp-card reveal">
+      <span class="sp-icon">🏠</span>
+      <div class="sp-title">Interior Consulting</div>
+      <p class="sp-desc">Expert advice on space planning, materials, and style to maximize your budget.</p>
+      <a href="services.html" class="sp-link">Explore →</a>
+    </div>
+  </div>
+</section>
+
+<!-- OWNERS -->
+<section class="section" style="background:var(--light);">
+  <div style="text-align:center;margin-bottom:0;" class="reveal">
+    <span class="eyebrow" style="justify-content:center;">The Founders</span>
+    <h2 class="display-title">Meet the <em>Experts</em></h2>
+    <div class="gold-rule center"></div>
+  </div>
+  <div class="owners-grid" data-stagger>
+    <div class="owner-card glow-card reveal">
+      <div class="owner-initials">NS</div>
+      <div class="owner-name">Nisarg Surani</div>
+      <span class="owner-role">Co-Founder & Design Lead</span>
+      <p class="owner-bio">A passionate interior specialist with an eye for beauty and function. Nisarg leads all design and client consultation — ensuring every space tells a unique story.</p>
+    </div>
+    <div class="owner-card glow-card reveal">
+      <div class="owner-initials">PS</div>
+      <div class="owner-name">Pratik Surani</div>
+      <span class="owner-role">Co-Founder & Operations</span>
+      <p class="owner-bio">The backbone of every project's execution. Pratik oversees material sourcing, workforce management, and on-site quality — delivering perfection every time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div class="cta-banner-title reveal-left">Ready to Transform Your Space Into Something Extraordinary?</div>
+  <a href="https://wa.me/919586525305?text=Hello%20PnP%20Interior!%20I%27d%20like%20a%20free%20consultation." target="_blank" class="btn-dark reveal-right">Chat on WhatsApp →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">PnP<span> Interior</span></div>
+      <p class="footer-desc">Complete furniture & interior solutions for homes and workspaces in Surat, Gujarat. Design. Materials. Execution.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Shop-136, Hilton Business Center</a></li>
+        <li><a href="#">Chapprabhatta, Surat – 394520</a></li>
+        <li><a href="https://wa.me/919586525305" target="_blank">+91 95865 25305</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 PnP Interior Consultant. All rights reserved.</span>
+    <a href="https://wa.me/919586525305?text=Hello%20PnP%20Interior!" target="_blank" class="footer-wa">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/919586525305?text=Hello%20PnP%20Interior!" target="_blank" class="wa-float">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="main.js"></script>
+</body>
+</html>

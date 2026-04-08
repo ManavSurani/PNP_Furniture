@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — PnP Interior Consultant</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  min-height: 55vh;
+  background: var(--dark);
+  display: flex; align-items: flex-end;
+  padding: 120px 5vw 70px;
+  position: relative; overflow: hidden;
+}
+.page-hero-bg {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.page-hero-glow {
+  position: absolute; top: -100px; right: 10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(200,169,110,0.1) 0%, transparent 70%);
+}
+.page-hero-content { position: relative; }
+.page-hero-breadcrumb {
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 1rem;
+}
+.page-hero-breadcrumb a { color: var(--gold); text-decoration: none; }
+.page-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 500; color: var(--white);
+  line-height: 1.05;
+}
+.page-hero-title em { color: var(--gold); font-style: italic; }
+.page-hero-line {
+  position: absolute; bottom: 0; left: 5vw; right: 5vw;
+  height: 1px; background: var(--border);
+}
+
+/* STORY */
+.story-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 100px; align-items: start;
+}
+.story-sticky { position: sticky; top: 100px; }
+.story-tag {
+  font-size: 0.68rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1.2rem;
+}
+.story-tag::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+
+.story-chapters { display: flex; flex-direction: column; gap: 0; }
+.story-chapter {
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+  display: grid; grid-template-columns: 80px 1fr; gap: 24px;
+}
+.chapter-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold);
+  font-weight: 400; opacity: 0.6; padding-top: 4px;
+}
+.chapter-title {
+  font-size: 0.92rem; font-weight: 500; color: var(--dark);
+  margin-bottom: 8px;
+}
+.chapter-text { font-size: 0.82rem; color: var(--mid); font-weight: 300; line-height: 1.75; }
+
+/* VALUES */
+.values-section { background: var(--dark); padding: 110px 5vw; }
+.values-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  margin-top: 60px; border: 1px solid var(--border);
+}
+.value-card {
+  background: var(--dark2); padding: 48px 36px;
+  transition: background var(--transition);
+}
+.value-card:hover { background: var(--dark3); }
+.value-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; color: var(--gold);
+  opacity: 0.12; line-height: 1;
+  margin-bottom: -24px;
+}
+.value-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; color: var(--white);
+  margin-bottom: 12px; position: relative;
+}
+.value-text { font-size: 0.82rem; color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.8; }
+
+/* SHOWROOM */
+.showroom { background: var(--light); padding: 110px 5vw; }
+.showroom-inner {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  padding: 60px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+}
+.address-block { display: flex; flex-direction: column; gap: 24px; margin-top: 2rem; }
+.address-item {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.address-icon {
+  width: 40px; height: 40px;
+  background: rgba(200,169,110,0.1);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  border-radius: 2px;
+}
+.address-label {
+  font-size: 0.65rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 4px;
+}
+.address-val { font-size: 0.85rem; color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.6; }
+.map-placeholder {
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  aspect-ratio: 4/3;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  font-size: 0.8rem; color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+}
+.map-pin { font-size: 2.5rem; }
+
+@media (max-width: 900px) {
+  .story-grid { grid-template-columns: 1fr; }
+  .story-sticky { position: static; }
+  .values-grid { grid-template-columns: 1fr; }
+  .showroom-inner { grid-template-columns: 1fr; padding: 36px; }
+}
+</style>
+</head>
+<body>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<nav class="navbar scrolled">
+  <a href="index.html" class="nav-logo">PnP<span> Interior</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="packages.html">Packages</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="about.html" class="active">About</a>
+  <a href="services.html">Services</a><a href="packages.html">Packages</a>
+  <a href="reviews.html">Reviews</a><a href="contact.html">Contact Us</a>
+</div>
+
+<div class="page-wrapper">
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-glow"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-breadcrumb"><a href="index.html">Home</a> / About Us</div>
+    <h1 class="page-hero-title">Our <em>Story</em><br>& Mission</h1>
+  </div>
+  <div class="page-hero-line"></div>
+</div>
+
+<!-- STORY -->
+<section class="section">
+  <div class="story-grid">
+    <div class="story-sticky reveal-left">
+      <span class="story-tag">Who We Are</span>
+      <h2 class="display-title">Built on <em>Passion</em><br>& Precision</h2>
+      <div class="gold-rule"></div>
+      <p class="body-text" style="margin-bottom:1.5rem;">PnP Interior Consultant was born from a simple belief — that every person deserves a beautiful, functional living and working space, regardless of budget.</p>
+      <p class="body-text">Founded by Nisarg and Pratik Surani, we combine creative design sensibility with hands-on expertise to deliver end-to-end furniture and interior solutions across Surat and beyond.</p>
+      <div style="margin-top:2.5rem;">
+        <a href="contact.html" class="btn-gold">Work With Us →</a>
+      </div>
+    </div>
+    <div class="story-chapters" data-stagger>
+      <div class="story-chapter reveal">
+        <div class="chapter-year">2014</div>
+        <div>
+          <div class="chapter-title">The Beginning</div>
+          <p class="chapter-text">Nisarg and Pratik started PnP from a small hardware shop in Surat with a vision to make quality interior solutions accessible to all.</p>
+        </div>
+      </div>
+      <div class="story-chapter reveal">
+        <div class="chapter-year">2016</div>
+        <div>
+          <div class="chapter-title">Growing the Team</div>
+          <p class="chapter-text">Expanded with a team of skilled carpenters and designers to take on residential and commercial interior projects across the city.</p>
+        </div>
+      </div>
+      <div class="story-chapter reveal">
+        <div class="chapter-year">2019</div>
+        <div>
+          <div class="chapter-title">New Showroom</div>
+          <p class="chapter-text">Moved into our dedicated showroom at Hilton Business Center, allowing clients to experience furniture quality and finishes firsthand.</p>
+        </div>
+      </div>
+      <div class="story-chapter reveal">
+        <div class="chapter-year">2022</div>
+        <div>
+          <div class="chapter-title">500+ Projects Milestone</div>
+          <p class="chapter-text">Crossed 500 completed projects — from modular kitchens to complete office interiors — earning a trusted reputation in Surat.</p>
+        </div>
+      </div>
+      <div class="story-chapter reveal">
+        <div class="chapter-year">Today</div>
+        <div>
+          <div class="chapter-title">Full-Service Excellence</div>
+          <p class="chapter-text">Offering complete interior solutions: design, materials, skilled labor, or the complete package — always at the best value.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="reveal" style="text-align:center;">
+    <span class="eyebrow" style="justify-content:center;">What Drives Us</span>
+    <h2 class="display-title light">Our Core <em>Values</em></h2>
+  </div>
+  <div class="values-grid" data-stagger>
+    <div class="value-card reveal">
+      <div class="value-num">01</div>
+      <div class="value-title">Craftsmanship</div>
+      <p class="value-text">Every joint, finish, and detail is executed with precision. We believe the quality of work speaks louder than any promise.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-num">02</div>
+      <div class="value-title">Transparency</div>
+      <p class="value-text">No hidden costs. No surprises. We work within your budget and keep you informed at every step of the project.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-num">03</div>
+      <div class="value-title">Client First</div>
+      <p class="value-text">Your satisfaction is our success. We listen carefully and design solutions that genuinely match your vision and needs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OWNERS DETAIL -->
+<section class="section" style="background:var(--cream);">
+  <div class="reveal" style="text-align:center;margin-bottom:60px;">
+    <span class="eyebrow" style="justify-content:center;">The Founders</span>
+    <h2 class="display-title">Meet <em>Nisarg & Pratik</em></h2>
+    <div class="gold-rule center"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;" data-stagger>
+    <div style="background:var(--white);border:1px solid rgba(200,169,110,0.15);padding:56px 48px;position:relative;overflow:hidden;" class="reveal glow-card">
+      <div style="position:absolute;top:0;left:0;width:4px;bottom:0;background:linear-gradient(to bottom,var(--gold),var(--gold-dark));"></div>
+      <div style="width:80px;height:80px;border-radius:50%;background:var(--dark);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);margin-bottom:24px;">NS</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--dark);margin-bottom:6px;">Nisarg Surani</h3>
+      <span style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:20px;">Co-Founder & Design Lead</span>
+      <div class="gold-rule"></div>
+      <p style="font-size:0.88rem;color:var(--mid);font-weight:300;line-height:1.85;margin-bottom:16px;">Nisarg brings a deep passion for beautiful, livable interiors. With an instinctive eye for proportion, material, and light, he transforms client briefs into spaces that feel both aspirational and deeply personal.</p>
+      <p style="font-size:0.88rem;color:var(--mid);font-weight:300;line-height:1.85;">His approach centers on listening first — understanding how you live, work, and want to feel in your space before a single design decision is made.</p>
+    </div>
+    <div style="background:var(--white);border:1px solid rgba(200,169,110,0.15);padding:56px 48px;position:relative;overflow:hidden;" class="reveal glow-card">
+      <div style="position:absolute;top:0;left:0;width:4px;bottom:0;background:linear-gradient(to bottom,var(--gold),var(--gold-dark));"></div>
+      <div style="width:80px;height:80px;border-radius:50%;background:var(--dark);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold);margin-bottom:24px;">PS</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--dark);margin-bottom:6px;">Pratik Surani</h3>
+      <span style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:20px;">Co-Founder & Operations Head</span>
+      <div class="gold-rule"></div>
+      <p style="font-size:0.88rem;color:var(--mid);font-weight:300;line-height:1.85;margin-bottom:16px;">Pratik is the engine that makes every project run smoothly. He manages material procurement, craftsman coordination, and on-site execution with an obsessive attention to timelines and quality standards.</p>
+      <p style="font-size:0.88rem;color:var(--mid);font-weight:300;line-height:1.85;">His relationships with material suppliers and his team of skilled craftsmen mean that PnP always delivers exactly what was promised — on time and within budget.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWROOM -->
+<section class="showroom">
+  <div class="reveal" style="text-align:center;margin-bottom:50px;">
+    <span class="eyebrow" style="justify-content:center;">Visit Us</span>
+    <h2 class="display-title">Our <em>Showroom</em></h2>
+  </div>
+  <div class="showroom-inner reveal">
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--white);margin-bottom:8px;">PnP Hardware Hub</h3>
+      <p style="font-size:0.8rem;color:rgba(255,255,255,0.35);font-weight:300;margin-bottom:0;">Experience our materials and finishes in person</p>
+      <div class="address-block">
+        <div class="address-item">
+          <div class="address-icon">📍</div>
+          <div>
+            <div class="address-label">Address</div>
+            <div class="address-val">Shop-136, Hilton Business Center<br>Beside Rivanta Garden City<br>Chapprabhatta, Ganeshpura<br>Surat, Gujarat – 394520</div>
+          </div>
+        </div>
+        <div class="address-item">
+          <div class="address-icon">🕐</div>
+          <div>
+            <div class="address-label">Working Hours</div>
+            <div class="address-val">Monday – Saturday: 10:00 AM – 7:00 PM<br>Sunday: By appointment only</div>
+          </div>
+        </div>
+        <div class="address-item">
+          <div class="address-icon">📱</div>
+          <div>
+            <div class="address-label">WhatsApp</div>
+            <div class="address-val">+91 95865 25305</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:2rem;">
+        <a href="https://wa.me/919586525305?text=Hello!%20I%20want%20to%20visit%20your%20showroom." target="_blank" class="btn-gold">Book a Showroom Visit →</a>
+      </div>
+    </div>
+    <div class="map-placeholder">
+      <div class="map-pin">📍</div>
+      <div>Hilton Business Center, Surat</div>
+      <div style="font-size:0.68rem;opacity:0.5;">Add your Google Maps embed here</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">PnP<span> Interior</span></div>
+      <p class="footer-desc">Complete furniture & interior solutions for homes and workspaces in Surat, Gujarat.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li><li><a href="packages.html">Packages</a></li>
+        <li><a href="reviews.html">Reviews</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Shop-136, Hilton Business Center</a></li>
+        <li><a href="#">Chapprabhatta, Surat – 394520</a></li>
+        <li><a href="https://wa.me/919586525305" target="_blank">+91 95865 25305</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 PnP Interior Consultant. All rights reserved.</span>
+    <a href="https://wa.me/919586525305" target="_blank" class="footer-wa">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp Us
+    </a>
+  </div>
+</footer>
+<a href="https://wa.me/919586525305" target="_blank" class="wa-float"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script src="main.js"></script>
+</body>
+</html>
